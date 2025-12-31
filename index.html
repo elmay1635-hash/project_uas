@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psikotes Online - Kenali Potensi Diri Anda</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container nav-container">
+                <div class="logo">
+                    <i data-lucide="brain-circuit" class="logo-icon"></i>
+                    <span>MindMetrix</span>
+                </div>
+                <div class="nav-links">
+                    <button class="nav-btn active" onclick="app.navigate('home')">Beranda</button>
+                    <button class="nav-btn" onclick="app.navigate('test-intro')">Mulai Tes</button>
+                    <button class="nav-btn" onclick="app.navigate('admin-login')">Admin</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="main-content" class="container">
+            <!-- Dynamic content will be injected here -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container footer-content">
+                <p>&copy; 2026 MindMetrix Psikotes Online. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Templates for different views -->
+    <template id="view-home">
+        <div class="hero-section">
+            <div class="hero-content">
+                <span class="badge">Psikotes Online Terintegrasi</span>
+                <h1>Temukan Potensi Tersembunyi Anda</h1>
+                <p>Platform evaluasi psikologis modern untuk mengukur kepribadian, minat, dan bakat Anda dengan metode
+                    yang akurat dan interaktif.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="app.navigate('test-intro')">
+                        Mulai Sekarang <i data-lucide="arrow-right"></i>
+                    </button>
+                </div>
+                <div class="hero-stats-row">
+                    <div class="mini-stat">
+                        <i data-lucide="check-circle" class="text-success"></i>
+                        <span>Terverifikasi</span>
+                    </div>
+                    <div class="mini-stat">
+                        <i data-lucide="users" class="text-primary"></i>
+                        <span>500+ Peserta</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Abstract geometric shapes created with CSS will go here -->
+                <div class="abstract-shape shape-1"></div>
+                <div class="abstract-shape shape-2"></div>
+                <div class="glass-card">
+                    <div class="stat-item">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Pengguna Terdaftar</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="features">
+            <div class="feature-card">
+                <div class="icon-box"><i data-lucide="target"></i></div>
+                <h3>Akurasi Tinggi</h3>
+                <p>Disusun berdasarkan standar psikometri terkini.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-box"><i data-lucide="clock"></i></div>
+                <h3>Efisien</h3>
+                <p>Hasil instan setelah menyelesaikan seluruh rangkaian tes.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-box"><i data-lucide="shield-check"></i></div>
+                <h3>Privasi Terjamin</h3>
+                <p>Data diri dan hasil tes Anda aman bersama kami.</p>
+            </div>
+        </section>
+    </template>
+
+    <template id="view-test-intro">
+        <div class="content-wrapper fade-in">
+            <div class="section-header">
+                <h2>Persiapan Tes</h2>
+                <p>Silakan baca petunjuk di bawah ini sebelum memulai.</p>
+            </div>
+
+            <div class="info-card">
+                <ul class="instruction-list">
+                    <li><i data-lucide="check-circle-2"></i> Pastikan Anda berada di tempat yang tenang.</li>
+                    <li><i data-lucide="check-circle-2"></i> Tes terdiri dari sejumlah pertanyaan pilihan ganda.</li>
+                    <li><i data-lucide="check-circle-2"></i> Jawablah dengan jujur sesuai diri Anda sendiri.</li>
+                    <li><i data-lucide="check-circle-2"></i> Tidak ada jawaban benar atau salah.</li>
+                </ul>
+
+                <div class="user-input-grooup">
+                    <label>Nama Lengkap</label>
+                    <input type="text" id="participant-name" placeholder="Masukkan nama Anda..." class="form-input">
+                </div>
+
+                <div class="action-footer">
+                    <button class="btn btn-primary full-width" onclick="app.startTest()">
+                        Mulai Tes Psikotes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="view-test-run">
+        <div class="test-container fade-in">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="test-progress"></div>
+            </div>
+
+            <div class="question-header">
+                <span class="question-counter" id="question-number">Pertanyaan 1/10</span>
+                <span class="timer" id="timer">00:00</span>
+            </div>
+
+            <div class="question-card">
+                <h3 id="question-text">Loading question...</h3>
+                <div class="options-grid" id="options-container">
+                    <!-- Options injected here -->
+                </div>
+            </div>
+
+            <div class="test-controls">
+                <button class="btn btn-secondary" onclick="app.prevQuestion()" id="btn-prev" disabled>Kembali</button>
+                <button class="btn btn-primary" onclick="app.nextQuestion()" id="btn-next">Selanjutnya</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="view-result">
+        <div class="result-container fade-in">
+            <div class="result-header">
+                <h2>Hasil Analisis Kepribadian</h2>
+                <p id="result-user-name">Peserta: -</p>
+            </div>
+
+            <div class="result-card main-result">
+                <div class="score-circle">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path class="circle" stroke-dasharray="0, 100"
+                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                            id="score-circle-path" />
+                    </svg>
+                    <div class="percentage" id="main-score">0%</div>
+                </div>
+                <div class="result-text">
+                    <h3 id="personality-type">Analisis sedang diproses...</h3>
+                    <p id="personality-desc">Deskripsi detail akan muncul di sini.</p>
+                </div>
+            </div>
+
+            <div class="recommendation-section">
+                <h3>Rekomendasi Pengembangan</h3>
+                <ul class="rec-list" id="recommendation-list">
+                    <!-- Recommendations -->
+                </ul>
+            </div>
+
+            <div class="action-footer center">
+                <button class="btn btn-outline" onclick="app.navigate('home')">Ke Beranda</button>
+                <button class="btn btn-primary" onclick="window.print()">Simpan Hasil (PDF)</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="view-admin-login">
+        <div class="login-wrapper fade-in">
+            <div class="login-card">
+                <h2>Admin Login</h2>
+                <p>Masuk untuk mengelola soal dan melihat data.</p>
+                <div class="form-group">
+                    <input type="password" id="admin-pass" class="form-input"
+                        placeholder="Kode Akses (default: Elmacantik)">
+                </div>
+                <button class="btn btn-primary full-width" onclick="app.loginAdmin()">Masuk</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="view-admin-dashboard">
+        <div class="dashboard-wrapper fade-in">
+            <div class="dashboard-header">
+                <h2>Panel Admin</h2>
+                <button class="btn btn-sm btn-outline" onclick="app.logoutAdmin()">Keluar</button>
+            </div>
+
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="app.switchAdminTab('questions')">Kelola Soal</button>
+                <button class="tab-btn" onclick="app.switchAdminTab('results')">Riwayat Hasil</button>
+            </div>
+
+            <div id="admin-tab-questions" class="admin-tab-content active">
+                <div class="content-header">
+                    <h3>Daftar Pertanyaan</h3>
+                    <button class="btn btn-sm btn-primary" onclick="app.showAddQuestionModal()">+ Tambah Soal</button>
+                </div>
+                <div class="questions-list" id="admin-questions-list">
+                    <!-- Questions list -->
+                </div>
+            </div>
+
+            <div id="admin-tab-results" class="admin-tab-content">
+                <h3>Riwayat Peserta</h3>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Nama</th>
+                            <th>Skor/Tipe</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-results-list">
+                        <!-- Results -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal-content" id="modal-container">
+            <!-- Dynamic Modal Content -->
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Initialize Icons
+        window.addEventListener('load', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+
+</html>
